@@ -99,6 +99,9 @@ const App = () => {
         <p className="my-15 text-center font-semibold text-gray-400">
           Drag and drop to reorder list
         </p>
+        <p className="my-15 text-center font-semibold text-gray-400">
+          Drag and drop to reorder list
+        </p>
       </div>
     </>
   );
