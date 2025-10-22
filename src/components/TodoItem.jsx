@@ -6,7 +6,7 @@ const TodoItem = ({ todo, updateTodo, removeTodo }) => {
 
   return (
     <>
-      <article className="flex items-center gap-3 border-b-1 border-b-gray-200 p-5 dark:border-b-gray-500 dark:text-gray-300">
+      <article className="flex items-center gap-3 border-b-1 border-b-gray-200 p-5 transition-all duration-700 dark:border-b-gray-500 dark:text-gray-300">
         <button
           onClick={() => updateTodo(id)}
           className={`h-5 w-5 flex-none cursor-pointer rounded-full border-1 border-gray-400 ${complete ? "flex items-center justify-center bg-gradient-to-tl from-purple-600 to-cyan-500" : "inline-block"}`}
