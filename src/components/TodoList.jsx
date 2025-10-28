@@ -10,7 +10,7 @@ const TodoList = ({
 }) => {
   return (
     <>
-      <div className="rounded-md bg-white transition-all duration-700 dark:bg-[#35304b]">
+      <div className="rounded-md bg-white shadow-2xl transition-all duration-700 dark:bg-[#35304b]">
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}

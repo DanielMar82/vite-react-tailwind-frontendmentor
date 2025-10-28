@@ -1,44 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TodoCreate from "./components/TodoCreate";
 import TodoFilter from "./components/TodoFilter";
 import TodoList from "./components/TodoList";
 
-const initialStateTodos = [
-  {
-    id: 1,
-    title: "Go to the gym",
-    complete: true,
-  },
-  {
-    id: 2,
-    title: "Complete online React bluuweb Curse",
-    complete: false,
-  },
-  {
-    id: 3,
-    title: "10 minutes meditation",
-    complete: false,
-  },
-  {
-    id: 4,
-    title: "Read for 1 hour",
-    complete: false,
-  },
-  {
-    id: 5,
-    title: "Pick up groceries",
-    complete: false,
-  },
-  {
-    id: 6,
-    title: "Complete Todo App on Frontend Mentor",
-    complete: false,
-  },
-];
+// const initialStateTodos = [
+//   {
+//     id: 1,
+//     title: "Go to the gym",
+//     complete: true,
+//   },
+//   {
+//     id: 2,
+//     title: "Complete online React bluuweb Curse",
+//     complete: false,
+//   },
+//   {
+//     id: 3,
+//     title: "10 minutes meditation",
+//     complete: false,
+//   },
+//   {
+//     id: 4,
+//     title: "Read for 1 hour",
+//     complete: false,
+//   },
+//   {
+//     id: 5,
+//     title: "Pick up groceries",
+//     complete: false,
+//   },
+//   {
+//     id: 6,
+//     title: "Complete Todo App on Frontend Mentor",
+//     complete: false,
+//   },
+// ];
+
+const initialStateTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
 const App = () => {
   const [todos, setTodos] = useState(initialStateTodos);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const createTodo = (title) => {
     const newTodo = {
@@ -86,10 +92,10 @@ const App = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-200 bg-[url('./assets/images/bg-mobile-light.jpg')] bg-contain bg-no-repeat px-7 transition-all duration-700 dark:bg-[#171520] dark:bg-[url('./assets/images/bg-mobile-dark.jpg')]">
+      <div className="min-h-screen bg-gray-200 bg-[url('./assets/images/bg-mobile-light.jpg')] bg-contain bg-no-repeat px-7 transition-all duration-700 md:bg-[url('./assets/images/bg-desktop-light.jpg')] dark:bg-[#171520] dark:bg-[url('./assets/images/bg-mobile-dark.jpg')] md:dark:bg-[url('./assets/images/bg-desktop-dark.jpg')]">
         <Header />
 
-        <main className="container mx-auto my-5 flex flex-col gap-5 text-[15px]">
+        <main className="container mx-auto my-5 flex max-w-2xl flex-col gap-5 text-[15px]">
           <TodoCreate createTodo={createTodo} />
 
           <TodoList
