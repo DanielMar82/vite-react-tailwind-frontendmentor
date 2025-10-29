@@ -11,7 +11,7 @@ const TodoItem = React.forwardRef(
         <article
           {...props}
           ref={ref}
-          className="flex items-center gap-3 border-b border-b-gray-200 p-5 transition-colors duration-700 dark:border-b-gray-500 dark:text-gray-300"
+          className="flex items-center gap-3 rounded-t-md border-b border-b-gray-200 bg-white p-5 transition-colors duration-700 dark:border-b-gray-500 dark:bg-[#35304b] dark:text-gray-300"
         >
           <button
             onClick={() => updateTodo(id)}
