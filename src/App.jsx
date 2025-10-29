@@ -1,41 +1,18 @@
+import { DragDropContext } from "@hello-pangea/dnd";
+
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TodoCreate from "./components/TodoCreate";
 import TodoFilter from "./components/TodoFilter";
 import TodoList from "./components/TodoList";
 
-// const initialStateTodos = [
-//   {
-//     id: 1,
-//     title: "Go to the gym",
-//     complete: true,
-//   },
-//   {
-//     id: 2,
-//     title: "Complete online React bluuweb Curse",
-//     complete: false,
-//   },
-//   {
-//     id: 3,
-//     title: "10 minutes meditation",
-//     complete: false,
-//   },
-//   {
-//     id: 4,
-//     title: "Read for 1 hour",
-//     complete: false,
-//   },
-//   {
-//     id: 5,
-//     title: "Pick up groceries",
-//     complete: false,
-//   },
-//   {
-//     id: 6,
-//     title: "Complete Todo App on Frontend Mentor",
-//     complete: false,
-//   },
-// ];
+const reorder = (list, startIndex, endIndex) => {
+  const result = [...list];
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 const initialStateTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
@@ -90,6 +67,20 @@ const App = () => {
     }
   };
 
+  const handleDragEnd = (result) => {
+    const { destination, source } = result;
+    if (!destination) return;
+    if (
+      source.index === destination.index &&
+      source.droppableId === destination.droppableId
+    )
+      return;
+
+    setTodos((prevTasks) =>
+      reorder(prevTasks, source.index, destination.index),
+    );
+  };
+
   return (
     <>
       <div className="min-h-screen bg-gray-200 bg-[url('./assets/images/bg-mobile-light.jpg')] bg-contain bg-no-repeat px-7 transition-all duration-700 md:bg-[url('./assets/images/bg-desktop-light.jpg')] dark:bg-[#171520] dark:bg-[url('./assets/images/bg-mobile-dark.jpg')] md:dark:bg-[url('./assets/images/bg-desktop-dark.jpg')]">
@@ -98,13 +89,15 @@ const App = () => {
         <main className="container mx-auto my-5 flex max-w-2xl flex-col gap-5 text-[15px]">
           <TodoCreate createTodo={createTodo} />
 
-          <TodoList
-            todos={filteredTodos()}
-            updateTodo={updateTodo}
-            removeTodo={removeTodo}
-            computedItemsLeft={computedItemsLeft}
-            clearComplete={clearComplete}
-          />
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <TodoList
+              todos={filteredTodos()}
+              updateTodo={updateTodo}
+              removeTodo={removeTodo}
+              computedItemsLeft={computedItemsLeft}
+              clearComplete={clearComplete}
+            />
+          </DragDropContext>
 
           <TodoFilter filter={filter} changeFilter={changeFilter} />
         </main>
